@@ -97,7 +97,12 @@ def makeSVG(data):
         currentStatus = "Was playing:"
         recentPlays = recentlyPlayed()
         recentPlaysLength = len(recentPlays["items"])
-        itemIndex = random.randint(0, recentPlaysLength - 1)
+        if recentPlaysLength == 0:
+            return render_template("spotify.html.j2", **{"status": "No recent plays"})
+        elif recentPlaysLength == 1:
+            itemIndex = 0
+        else:
+            itemIndex = random.randint(0, recentPlaysLength - 1)
         item = recentPlays["items"][itemIndex]["track"]
     else:
         item = data["item"]
